@@ -18,7 +18,7 @@ python main.py
 ```
 
 #### 成果图
-![成果图](./screenshot/meizi.png)
+![成果图](./screenshot/WX20190408-222536.png)
 
 #### 特别声明
 
