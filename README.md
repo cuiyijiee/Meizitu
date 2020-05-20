@@ -16,14 +16,13 @@ Scrapy 2.0.1
 2.添加.gitignore文件，删除无用文件
 
 #### 四、使用说明
-自动在个人主目录创建meizi文件夹，目录格式为 `~/meizi/{sort1}/{sort2}/{title}/{page}.jpg`
-![文件保存路径](./screenshot/WX20200521-002301.png)
-
 ```
 git clone https://github.com/AwsomeCui/Meizitu.git
 cd Meizitu
 python3 main.py
 ```
+程序会自动在个人主目录创建meizi文件夹，目录格式为 `~/meizi/{sort1}/{sort2}/{title}/{page}.jpg`
+![文件保存路径](./screenshot/WX20200521-002301.png)
 
 #### 五、成果图
 ![成果图](./screenshot/WX20190408-222536.png)
