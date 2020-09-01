@@ -2,4 +2,4 @@
 # -*- coding: utf-8 -*-
 from scrapy.cmdline import execute
 
-execute(['scrapy', 'crawl', 'meizi'])
+execute(['scrapy', 'crawl', 'itubacc'])

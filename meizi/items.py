@@ -8,7 +8,7 @@
 import scrapy
 
 
-class MeiziItem(scrapy.Item):
+class ItubaccItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
 
@@ -20,4 +20,20 @@ class MeiziItem(scrapy.Item):
     order = scrapy.Field()
     origin_url = scrapy.Field()
 
+    pass
+
+
+class EveriaItem(scrapy.Item):
+    origin_id = scrapy.Field()
+    cover_url = scrapy.Field()
+    album_url = scrapy.Field()
+    title = scrapy.Field()
+    category = scrapy.Field()
+    pictures = scrapy.Field()
+    pass
+
+
+class EveriaPicItem(scrapy.Item):
+    url = scrapy.Field()
+    order = scrapy.Field()
     pass
