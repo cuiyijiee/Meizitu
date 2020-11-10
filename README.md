@@ -19,7 +19,10 @@ Scrapy 2.0.1
 ```
 git clone https://github.com/AwsomeCui/Meizitu.git
 cd Meizitu
-python3 main.py
+#1.该脚本跑ituba.cc的图片存在本地
+python3 itubacc.py
+#2.该脚本跑everia.club的图片链接信息存储再mongodb中
+python3 everia.py
 ```
 程序会自动在个人主目录创建meizi文件夹，目录格式为 `~/meizi/{sort1}/{sort2}/{title}/{page}.jpg`
 ![文件保存路径](./screenshot/WX20200521-002301.png)
