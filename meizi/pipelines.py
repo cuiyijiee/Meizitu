@@ -13,7 +13,7 @@ from meizi.items import ItubaccItem, EveriaItem
 
 class MeiziPipeline(object):
     base_save_dir = os.environ['HOME'] + "/meizi"
-    myclient = pymongo.MongoClient('mongodb://cuiyijie:Abc,123.@localhost:27017/')
+    myclient = pymongo.MongoClient('mongodb://cuiyijie:cuiyijie987@172.17.0.5:27017/')
     mydb = myclient['meizi']
 
     def __init__(self):
