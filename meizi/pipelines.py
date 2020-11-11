@@ -25,10 +25,11 @@ class MeiziPipeline(object):
         if type(item) is ItubaccItem:
             self.download_pic(item)
         elif type(item) is EveriaItem:
-            select_count = self.mydb['everia'].count({'origin_id': item['origin_id']})
-            if select_count == 0:
-                insert_result = self.mydb['everia'].insert_one(dict(item))
-                print(insert_result.inserted_id)
+            # select_count = self.mydb['everia'].count({'origin_id': item['origin_id']})
+            # if select_count == 0:
+            #     insert_result = self.mydb['everia'].insert_one(dict(item))
+            #     print(insert_result.inserted_id)
+            print(item)
         return item
 
     def download_pic(self, item):
