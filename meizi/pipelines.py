@@ -22,6 +22,21 @@ class MeiziPipeline(object):
         if not os.path.exists(self.base_save_dir):
             os.mkdir(self.base_save_dir)
 
+        if not PW_Category.table_exists():
+            PW_Category.create_table(safe=True)
+        else:
+            print("category table already created!")
+
+        if not PW_Album.table_exists():
+            PW_Album.create_table(safe=True)
+        else:
+            print("album table already created!")
+
+        if not PW_Picture.table_exists():
+            PW_Picture.create_table(safe=True)
+        else:
+            print("picture table already created!")
+
         # 从数据库中取出所有的目录
         for category in PW_Category.select():
             self.exist_category[category.name] = category.id
