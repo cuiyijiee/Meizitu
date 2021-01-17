@@ -10,7 +10,7 @@ import scrapy
 
 from peewee import *
 
-db = MySQLDatabase("qingcheng", host='47.99.116.76', port=3306, user='root', passwd='Abc,123.', charset='utf8')
+db = MySQLDatabase("qingcheng", host='127.0.0.1', port=3306, user='root', passwd='Abc,123.', charset='utf8')
 
 
 class ItubaccItem(scrapy.Item):
@@ -44,7 +44,7 @@ class EveriaPicItem(scrapy.Item):
 
 
 class PW_Category(Model):
-    id = IntegerField(primary_key=True)
+    id = AutoField(primary_key=True)
     name = CharField()
     created_at = DateTimeField(default=datetime.now())
 
@@ -54,7 +54,7 @@ class PW_Category(Model):
 
 
 class PW_Album(Model):
-    id = IntegerField(primary_key=True)
+    id = BigAutoField(primary_key=True)
     origin_id = CharField()
     cover_url = CharField()
     album_url = CharField()
@@ -68,7 +68,7 @@ class PW_Album(Model):
 
 
 class PW_Picture(Model):
-    id = IntegerField(primary_key=True)
+    id = BigAutoField(primary_key=True)
     album_id = IntegerField()
     url = CharField()
     index = IntegerField()
