@@ -8,7 +8,7 @@ import os
 import urllib.request
 import pymongo
 
-from meizi.items import ItubaccItem, EveriaItem
+from meizi.items import ItubaccItem, EveriaItem, PW_Category, PW_Album, PW_Picture
 
 
 class MeiziPipeline(object):
@@ -16,9 +16,15 @@ class MeiziPipeline(object):
     myclient = pymongo.MongoClient('mongodb://cuiyijie:cuiyijie987@172.17.0.5:27017/')
     mydb = myclient['meizi']
 
+    exist_category = {}
+
     def __init__(self):
         if not os.path.exists(self.base_save_dir):
             os.mkdir(self.base_save_dir)
+
+        # 从数据库中取出所有的目录
+        for category in PW_Category.select():
+            self.exist_category[category.name] = category.id
 
     def process_item(self, item, spider):
 
@@ -29,7 +35,33 @@ class MeiziPipeline(object):
             # if select_count == 0:
             #     insert_result = self.mydb['everia'].insert_one(dict(item))
             #     print(insert_result.inserted_id)
-            print(item)
+            # print(item)
+            if item['category'] not in self.exist_category:
+                insert_result = PW_Category.create(name=item['category'])
+                self.exist_category[item['category']] = insert_result.id
+                category_id = insert_result.id
+            else:
+                category_id = self.exist_category[item['category']]
+            album, created = PW_Album.get_or_create(origin_id=item['origin_id'], defaults={
+                'origin_id': item['origin_id'],
+                'cover_url': item['cover_url'],
+                'album_url': item['album_url'],
+                'title': item['title'],
+                'category': category_id
+            })
+
+            already_saved_pic_count = PW_Picture.select().where(PW_Picture.album_id == album.id).count()
+            crawled_pics = item['pictures']
+            if already_saved_pic_count != len(crawled_pics):
+                PW_Picture.delete().where(PW_Picture.album_id == album.id)
+                album_picture_data = []
+                for pic in crawled_pics:
+                    album_picture_data.append({
+                        'album_id': album.id,
+                        'url': pic['url'],
+                        'index': pic['order']
+                    })
+                PW_Picture.insert_many(album_picture_data).execute()
         return item
 
     def download_pic(self, item):
