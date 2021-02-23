@@ -21,7 +21,7 @@ class everia(Spider):
         album_list = response.xpath('//*[@id="main"]/div/div').extract()
         for album in album_list:
             album_selector = Selector(text=album)
-            album_cover = album_selector.xpath('//article/div[1]/a/noscript/img/@src').extract_first()
+            album_cover = album_selector.xpath('//article/div[1]/a/img/@src').extract_first()
             album_detail_url = album_selector.xpath('//article/div[1]/a/@href').extract_first()
             album_id = album_selector.xpath('//article/@id').extract_first()
             yield Request(url=album_detail_url, callback=self.parse_detail, meta={
