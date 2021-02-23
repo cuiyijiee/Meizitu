@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-import re
 from scrapy import Spider, Request, Selector
 
-from meizi.items import EveriaItem, EveriaPicItem
+from meizi.items import EveriaItem, EveriaPicItem, PW_Album
 
 
 class everia(Spider):
     name = 'everia'
     start_urls = [
-         'https://everia.club/category/aidol/',
-         'https://everia.club/category/gravure/',
-         'https://everia.club/category/magazine/',
-        #'https://everia.club/category/thailand/',
-         'https://everia.club/category/chinese/',
+        'https://everia.club/category/aidol/',
+        # 'https://everia.club/category/gravure/',
+        'https://everia.club/category/magazine/',
+        'https://everia.club/category/thailand/',
+        'https://everia.club/category/chinese/',
     ]
     allow_domains = ['https://everia.club']
 
@@ -30,10 +29,16 @@ class everia(Spider):
                 'origin_id': album_id
             })
 
-        previous_page = response.xpath('//*[@class="nav-previous"]').extract()
-        if len(previous_page) > 0:
-            url = Selector(text=previous_page[0]).xpath('//a/@href').extract_first()
-            yield Request(url=url, callback=self.parse)
+        if len(album_list) > 0:
+            # 判断当前页面的最后一个是否被采集了，如果已经采集过了，则不进行翻页操作
+            last_album_of_this_page = album_list[-1]
+            album_selector = Selector(text=last_album_of_this_page)
+            album_id = album_selector.xpath('//article/@id').extract_first()
+            if PW_Album.get_or_none(origin_id=album_id) is None:
+                previous_page = response.xpath('//*[@class="nav-previous"]').extract()
+                if len(previous_page) > 0:
+                    url = Selector(text=previous_page[0]).xpath('//a/@href').extract_first()
+                    yield Request(url=url, callback=self.parse)
 
     def parse_detail(self, response):
         cover = response.meta['cover']
