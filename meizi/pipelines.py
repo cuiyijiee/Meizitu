@@ -12,7 +12,8 @@ from meizi.items import ItubaccItem, EveriaItem, PW_Category, PW_Album, PW_Pictu
 
 
 class MeiziPipeline(object):
-    base_save_dir = os.environ['HOME'] + "/meizi"
+    #base_save_dir = os.environ['HOME'] + "/meizi"
+    base_save_dir = "D:/meizi"
     myclient = pymongo.MongoClient('mongodb://cuiyijie:cuiyijie987@172.17.0.5:27017/')
     mydb = myclient['meizi']
 
@@ -64,6 +65,10 @@ class MeiziPipeline(object):
                 'title': item['title'],
                 'category': category_id
             })
+
+            if album.category != category_id:
+                album.category = category_id
+                album.save()
 
             already_saved_pic_count = PW_Picture.select().where(PW_Picture.album_id == album.id).count()
             crawled_pics = item['pictures']

@@ -47,7 +47,10 @@ class everia(Spider):
         url = response.meta['url']
         origin_id = response.meta['origin_id']
         title = response.xpath('//*[@id="main"]/article/header/div/h1/text()').extract_first()
-        category = response.xpath('//*[@id="main"]/article/header/div/ul/li[2]/a/text()').extract_first()
+        category_list = response.xpath('//*[@id="main"]/article/header/div/ul/li[2]/a/text()').extract()
+        category = category_list[0]
+        if (category == 'EVERIA') & (len(category_list) == 2):
+            category = category_list[1]
         everia_item = EveriaItem(origin_id=origin_id, cover_url=cover,
                                  album_url=url, title=title, category=category, pictures=[])
         pic_list = response.xpath('//*[@id="main"]/article/div/div').extract()
