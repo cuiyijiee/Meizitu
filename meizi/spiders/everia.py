@@ -9,8 +9,10 @@ class everia(Spider):
     name = 'everia'
     start_urls = [
         'https://everia.club/category/aidol/',
-        # 'https://everia.club/category/gravure/',
+        'https://everia.club/category/gravure/',
         'https://everia.club/category/magazine/',
+        'https://everia.club/category/korea/',
+        'https://everia.club/category/cosplay/',
         'https://everia.club/category/thailand/',
         'https://everia.club/category/chinese/',
     ]
