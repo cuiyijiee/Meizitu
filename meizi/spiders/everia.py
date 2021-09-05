@@ -36,11 +36,11 @@ class everia(Spider):
             last_album_of_this_page = album_list[-1]
             album_selector = Selector(text=last_album_of_this_page)
             album_id = album_selector.xpath('//article/@id').extract_first()
-            #if PW_Album.get_or_none(origin_id=album_id) is None:
-            previous_page = response.xpath('//*[@class="nav-previous"]').extract()
-            if len(previous_page) > 0:
-                url = Selector(text=previous_page[0]).xpath('//a/@href').extract_first()
-                yield Request(url=url, callback=self.parse)
+            if PW_Album.get_or_none(origin_id=album_id) is None:
+                previous_page = response.xpath('//*[@class="nav-previous"]').extract()
+                if len(previous_page) > 0:
+                    url = Selector(text=previous_page[0]).xpath('//a/@href').extract_first()
+                    yield Request(url=url, callback=self.parse)
 
     def parse_detail(self, response):
         cover = response.meta['cover']
