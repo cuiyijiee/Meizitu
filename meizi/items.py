@@ -10,7 +10,7 @@ import scrapy
 
 from peewee import *
 
-db = MySQLDatabase("qingcheng", host='127.0.0.1', port=3306, user='root', passwd='Abc,123.', charset='utf8')
+db = MySQLDatabase("qingcheng", host='158.247.204.243', port=3306, user='root', passwd='Abc,123.', charset='utf8')
 #db = MySQLDatabase("qingcheng", host='35.234.21.172', port=3306, user='root', passwd='Abc,123.', charset='utf8')
 
 
@@ -62,6 +62,7 @@ class PW_Album(Model):
     title = CharField()
     category = IntegerField()
     created_at = DateTimeField(default=datetime.now())
+    enabled = BooleanField()
 
     class Meta:
         db_table = 'album'

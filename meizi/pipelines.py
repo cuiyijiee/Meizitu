@@ -63,7 +63,8 @@ class MeiziPipeline(object):
                 'cover_url': item['cover_url'],
                 'album_url': item['album_url'],
                 'title': item['title'],
-                'category': category_id
+                'category': category_id,
+                'enabled': 1
             })
 
             if album.category != category_id:
