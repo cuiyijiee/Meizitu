@@ -12,8 +12,8 @@ from meizi.items import ItubaccItem, EveriaItem, PW_Category, PW_Album, PW_Pictu
 
 
 class MeiziPipeline(object):
-    base_save_dir = os.environ['HOME'] + "/meizi"
-    #base_save_dir = "D:/meizi"
+    #base_save_dir = os.environ['HOME'] + "/meizi"
+    base_save_dir = "D:/meizi"
     myclient = pymongo.MongoClient('mongodb://cuiyijie:cuiyijie987@172.17.0.5:27017/')
     mydb = myclient['meizi']
 

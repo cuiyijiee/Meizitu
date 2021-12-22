@@ -65,14 +65,23 @@ class everia(Spider):
         everia_item = EveriaItem(origin_id=origin_id, cover_url=cover,
                                  album_url=url, title=title, category=category, pictures=[])
         pic_list = response.xpath('//*[@id="content"]/div/div/article/div[2]/div').extract()
-        for index in range(len(pic_list)):
-            pic_html = pic_list[index]
-            pic_selector = Selector(text=pic_html)
-            url = pic_selector.xpath('//a/@href').extract_first()
-
-            everia_pic_item = EveriaPicItem(order=index, url=url)
-            everia_item['pictures'].append(everia_pic_item)
+        if len(pic_list) <= 1:
+            pic_list = response.xpath('//*[@class="blocks-gallery-item"]').extract()
+            for index in range(len(pic_list)):
+                pic_html = pic_list[index]
+                pic_selector = Selector(text=pic_html)
+                url = pic_selector.xpath('//figure/img/@src').extract_first()
+                if url is not None:
+                    everia_pic_item = EveriaPicItem(order=index, url=url)
+                    everia_item['pictures'].append(everia_pic_item)
+        else:
+            for index in range(len(pic_list)):
+                pic_html = pic_list[index]
+                pic_selector = Selector(text=pic_html)
+                url = pic_selector.xpath('//a/@href').extract_first()
+                if url is not None:
+                    everia_pic_item = EveriaPicItem(order=index, url=url)
+                    everia_item['pictures'].append(everia_pic_item)
 
         yield everia_item
         pass
-
