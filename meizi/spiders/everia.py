@@ -83,5 +83,11 @@ class everia(Spider):
                     everia_pic_item = EveriaPicItem(order=index, url=url)
                     everia_item['pictures'].append(everia_pic_item)
 
-        yield everia_item
+        origin_pic_list_length = len(everia_item['pictures'])
+        everia_item['pictures'] = list(filter(lambda x: x['url'] is not None, everia_item['pictures']))
+        print("筛选前后列表长度：" + str(origin_pic_list_length) + " - " + str(len(everia_item['pictures'])))
+        if len(everia_item['pictures']) > 0:
+            yield everia_item
+        else:
+            print("解析失败url :" + everia_item["origin_id"])
         pass
