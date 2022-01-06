@@ -80,7 +80,7 @@ class MeiziPipeline(object):
                     album_picture_data.append({
                         'album_id': album.id,
                         'url': pic['url'],
-                        'index': pic['order']
+                        'pic_index': pic['order']
                     })
                 PW_Picture.insert_many(album_picture_data).execute()
         return item
