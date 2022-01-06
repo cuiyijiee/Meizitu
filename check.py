@@ -26,6 +26,8 @@ while len(find) > 0:
                 print("update: " + str(query) + ", result:" + str(result))
         except ConnectionError:
             print("connect error:skip!")
+        except Exception:
+            print("123")
         index += 1
     current_index += 1
     find = PW_Album.select().where(PW_Album.enabled == 1).order_by(PW_Album.id).paginate(int(current_index),
