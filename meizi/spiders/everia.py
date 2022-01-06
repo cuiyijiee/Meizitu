@@ -86,6 +86,11 @@ class everia(Spider):
         origin_pic_list_length = len(everia_item['pictures'])
         everia_item['pictures'] = list(filter(lambda x: x['url'] is not None, everia_item['pictures']))
         print("筛选前后列表长度：" + str(origin_pic_list_length) + " - " + str(len(everia_item['pictures'])))
+
+        if (len(everia_item['pictures']) == 0) or \
+                (len(everia_item['pictures']) == 1 and everia_item['pictures'][0]['url'] is None):
+            pass
+
         if len(everia_item['pictures']) > 0:
             yield everia_item
         else:

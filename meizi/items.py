@@ -73,7 +73,7 @@ class PW_Picture(Model):
     id = BigAutoField(primary_key=True)
     album_id = IntegerField()
     url = CharField()
-    index = IntegerField()
+    pic_index = IntegerField()
 
     class Meta:
         db_table = 'picture'
