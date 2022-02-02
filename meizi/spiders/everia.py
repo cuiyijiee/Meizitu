@@ -23,6 +23,8 @@ class everia(Spider):
         for album in album_list:
             album_selector = Selector(text=album)
             album_cover = album_selector.xpath('//article/div/div/div/a/img/@src').extract_first()
+            if album_cover.startswith('data:image/svg+xml'):
+                album_cover = album_selector.xpath('//article/div/div/div/a/img/@data-lazy-src').extract_first()
             album_detail_url = album_selector.xpath('//article/div/div/h2/a/@href').extract_first()
             album_id = album_selector.xpath('//article/@id').extract_first()
             yield Request(url=album_detail_url, callback=self.parse_detail, meta={
@@ -71,6 +73,8 @@ class everia(Spider):
                 pic_html = pic_list[index]
                 pic_selector = Selector(text=pic_html)
                 url = pic_selector.xpath('//figure/img/@src').extract_first()
+                if url.startswith('data:image/svg+xml'):
+                    url = pic_selector.xpath('//figure/img/@data-lazy-src').extract_first()
                 if url is not None:
                     everia_pic_item = EveriaPicItem(order=index, url=url)
                     everia_item['pictures'].append(everia_pic_item)
@@ -79,6 +83,8 @@ class everia(Spider):
                 pic_html = pic_list[index]
                 pic_selector = Selector(text=pic_html)
                 url = pic_selector.xpath('//a/@href').extract_first()
+                if url.startswith('data:image/svg+xml'):
+                    url = pic_selector.xpath('//figure/img/@data-lazy-src').extract_first()
                 if url is not None:
                     everia_pic_item = EveriaPicItem(order=index, url=url)
                     everia_item['pictures'].append(everia_pic_item)
