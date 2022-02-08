@@ -8,13 +8,13 @@ from meizi.items import EveriaItem, EveriaPicItem, PW_Album
 class everia(Spider):
     name = 'everia'
     start_urls = [
-        'https://everia.club/category/aidol/',
-        'https://everia.club/category/gravure/',
-        'https://everia.club/category/magazine/',
-        'https://everia.club/category/korea/',
-        'https://everia.club/category/cosplay/',
-        'https://everia.club/category/thailand/',
-        'https://everia.club/category/chinese/',
+        # 'https://everia.club/category/aidol/',
+        # 'https://everia.club/category/gravure/',
+        # 'https://everia.club/category/magazine/',
+        # 'https://everia.club/category/korea/',
+        # 'https://everia.club/category/cosplay/',
+         'https://everia.club/category/thailand/',
+        # 'https://everia.club/category/chinese/',
     ]
     allow_domains = ['https://everia.club']
 
@@ -69,6 +69,8 @@ class everia(Spider):
         pic_list = response.xpath('//*[@id="content"]/div/div/article/div[2]/div').extract()
         if len(pic_list) <= 1:
             pic_list = response.xpath('//*[@class="blocks-gallery-item"]').extract()
+            if len(pic_list) <= 0:
+                pic_list = response.xpath('//article/div[2]/figure/figure').extract()
             for index in range(len(pic_list)):
                 pic_html = pic_list[index]
                 pic_selector = Selector(text=pic_html)
