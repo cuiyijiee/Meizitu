@@ -19,7 +19,7 @@ class everia(Spider):
     allow_domains = ['https://everia.club']
 
     def parse(self, response):
-        album_list = response.xpath('//*[@id="content"]/div/div/div[1]/div[2]/article').extract()
+        album_list = response.xpath('//*[@class="posts-wrapper"]/article').extract()
         for album in album_list:
             album_selector = Selector(text=album)
             album_cover = album_selector.xpath('//article/div/div/div/a/img/@src').extract_first()
