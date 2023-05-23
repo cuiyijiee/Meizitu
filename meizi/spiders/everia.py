@@ -8,12 +8,12 @@ from meizi.items import EveriaItem, EveriaPicItem, PW_Album
 class everia(Spider):
     name = 'everia'
     start_urls = [
-        # 'https://everia.club/category/aidol/',
-        # 'https://everia.club/category/gravure/',
-        # 'https://everia.club/category/magazine/',
-        # 'https://everia.club/category/korea/',
-        # 'https://everia.club/category/cosplay/',
-        #  'https://everia.club/category/thailand/',
+        'https://everia.club/category/aidol/',
+        'https://everia.club/category/gravure/',
+        'https://everia.club/category/magazine/',
+        'https://everia.club/category/korea/',
+        'https://everia.club/category/cosplay/',
+        'https://everia.club/category/thailand/',
         'https://everia.club/category/chinese/',
     ]
     allow_domains = ['https://everia.club']
@@ -23,8 +23,8 @@ class everia(Spider):
         for album in album_list:
             album_selector = Selector(text=album)
             album_cover = album_selector.xpath('//article/div/div/div/a/img/@src').extract_first()
-            if album_cover.startswith('data:image/svg+xml'):
-                album_cover = album_selector.xpath('//article/div/div/div/a/img/@data-lazy-src').extract_first()
+            if album_cover.startswith('data:image'):
+                album_cover = album_selector.xpath('//article/div/div/div/a/img/@data-src').extract_first()
             album_detail_url = album_selector.xpath('//article/div/div/h2/a/@href').extract_first()
             album_id = album_selector.xpath('//article/@id').extract_first()
             yield Request(url=album_detail_url, callback=self.parse_detail, meta={
