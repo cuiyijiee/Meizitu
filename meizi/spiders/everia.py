@@ -13,7 +13,7 @@ class everia(Spider):
         'https://everia.club/category/magazine/',
         'https://everia.club/category/korea/',
         'https://everia.club/category/cosplay/',
-         'https://everia.club/category/thailand/',
+        'https://everia.club/category/thailand/',
         'https://everia.club/category/chinese/',
     ]
     allow_domains = ['https://everia.club']
@@ -75,8 +75,10 @@ class everia(Spider):
                 pic_html = pic_list[index]
                 pic_selector = Selector(text=pic_html)
                 url = pic_selector.xpath('//figure/img/@src').extract_first()
-                if url.startswith('data:image'):
-                    url = pic_selector.xpath('//figure/img/@data-src').extract_first()
+                if url.startswith('data:image/svg+xml') | url.startswith('data:image/gif'):
+                    url = pic_selector.xpath('//figure/img/@data-lazy-src').extract_first()
+                    if url is None:
+                        url = pic_selector.xpath('//figure/img/@data-src').extract_first()
                 if url is not None:
                     everia_pic_item = EveriaPicItem(order=index, url=url)
                     everia_item['pictures'].append(everia_pic_item)
@@ -85,8 +87,10 @@ class everia(Spider):
                 pic_html = pic_list[index]
                 pic_selector = Selector(text=pic_html)
                 url = pic_selector.xpath('//a/@href').extract_first()
-                if url.startswith('data:image/svg+xml'):
+                if url.startswith('data:image/svg+xml') | url.startswith('data:image/gif'):
                     url = pic_selector.xpath('//figure/img/@data-lazy-src').extract_first()
+                    if url is None:
+                        url = pic_selector.xpath('//figure/img/@data-src').extract_first()
                 if url is not None:
                     everia_pic_item = EveriaPicItem(order=index, url=url)
                     everia_item['pictures'].append(everia_pic_item)
