@@ -15,8 +15,7 @@ SPIDER_MODULES = ['meizi.spiders']
 NEWSPIDER_MODULE = 'meizi.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 ' \
-             'Safari/537.36 '
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36 Edg/99.0.1150.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -52,9 +51,10 @@ DOWNLOAD_DELAY = 2
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'meizi.middlewares.MeiziDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+    'meizi.middlewares.MeiziDownloaderMiddleware': 543,
+    'scrapy_cloudflare_middleware.middlewares.CloudFlareMiddleware': 560
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -65,7 +65,7 @@ DOWNLOAD_DELAY = 2
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'meizi.pipelines.MeiziPipeline': 300,
+     'meizi.pipelines.MeiziPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -69,6 +69,11 @@ class MeiziDownloaderMiddleware(object):
         return s
 
     def process_request(self, request, spider):
+#        request.meta['proxy'] = "http://127.0.0.1:7890"
+        request.headers[":authority"] = 'everia.club'
+        request.headers["accept-language"] = 'en;'
+        request.headers["accept"] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+        request.headers["sec-ch-ua"] = '" Not A;Brand";v="99", "Chromium";v="99", "Microsoft Edge";v="99";'
         # Called for each request that goes through the downloader
         # middleware.
 
