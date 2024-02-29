@@ -10,8 +10,8 @@ import scrapy
 
 from peewee import *
 
-db = MySQLDatabase("qingcheng", host='103.143.249.104', port=3306, user='root', passwd='Abc,123.', charset='utf8')
-
+db1 = MySQLDatabase("qingcheng", host='43.142.243.231', port=3306, user='root', passwd='Abc,123.', charset='utf8')
+db = PostgresqlDatabase("qingcheng",host='103.143.249.104', port=15432, user='postgres', password='Abc,123.')
 
 class ItubaccItem(scrapy.Item):
     # define the fields for your item here like:

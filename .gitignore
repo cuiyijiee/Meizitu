@@ -8,3 +8,4 @@ venv/
 log.txt
 *.log
 *.out
+.DS_Store
