@@ -4,16 +4,28 @@ from scrapy import Spider, Request, Selector
 
 from meizi.items import EveriaItem, EveriaPicItem, PW_Album
 
-
 class everia(Spider):
     name = 'everia'
+    current_page_url = 'https://everia.club/page/'
+    current_page_num = 3
     start_urls = [
-        'https://everia.club'
+        current_page_url + str(current_page_num) + "/"
     ]
     allow_domains = ['https://everia.club']
 
     def parse(self, response):
         album_list = response.xpath('//*[@id="blog-entries"]/article').extract()
+        if len(album_list) > 0:
+            # 判断当前页面的最后一个是否被采集了，如果已经采集过了，则不进行翻页操作
+            last_album_of_this_page = album_list[-1]
+            album_selector = Selector(text=last_album_of_this_page)
+            album_id = album_selector.xpath('//article/@id').extract_first()
+            if PW_Album.get_or_none(origin_id=album_id) is None:
+                self.current_page_num = self.current_page_num + 1
+                next_url = self.current_page_url + str(self.current_page_num) + '/'
+                self.logger.info("开始抓取下一页: " + next_url)
+                yield Request(url=next_url, callback=self.parse)
+
         for album in album_list:
             album_selector = Selector(text=album)
             album_cover = album_selector.xpath('//article/div/div/a/img/@src').extract_first()
@@ -26,17 +38,6 @@ class everia(Spider):
                 'url': album_detail_url,
                 'origin_id': album_id
             })
-
-        if len(album_list) > 0:
-            # 判断当前页面的最后一个是否被采集了，如果已经采集过了，则不进行翻页操作
-            last_album_of_this_page = album_list[-1]
-            album_selector = Selector(text=last_album_of_this_page)
-            album_id = album_selector.xpath('//article/@id').extract_first()
-            if PW_Album.get_or_none(origin_id=album_id) is None:
-                previous_page = response.xpath('//*[@id="content"]/div/div/div[1]/ul/li[6]/a').extract()
-                if len(previous_page) > 0:
-                    url = Selector(text=previous_page[0]).xpath('//a/@href').extract_first()
-                    yield Request(url=url, callback=self.parse)
 
     def parse_detail(self, response):
         cover = response.meta['cover']

@@ -65,7 +65,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-     'meizi.pipelines.MeiziPipeline': 300,
+    'meizi.pipelines.MeiziPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -88,3 +88,10 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+DATABASE_IP = '103.143.249.104'
+DATABASE_PORT = 15432
+DATABASE_NAME = 'qingcheng'
+DATABASE_USERNAME = 'postgres'
+DATABASE_PASSWORD = 'Cyj24kwj'
+DATABASE_SCHEMA = 'nongmo'

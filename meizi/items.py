@@ -8,23 +8,15 @@ from datetime import datetime
 
 import scrapy
 
+from meizi.settings import *
+
 from peewee import *
 
-db1 = MySQLDatabase("qingcheng", host='43.142.243.231', port=3306, user='root', passwd='Abc,123.', charset='utf8')
-db = PostgresqlDatabase("qingcheng",host='103.143.249.104', port=15432, user='postgres', password='Abc,123.')
-
-class ItubaccItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-
-    sort_1 = scrapy.Field()
-    # sort_1_url = scrapy.Field()
-    sort_2 = scrapy.Field()
-    name = scrapy.Field()
-    # page_url = scrapy.Field()
-    order = scrapy.Field()
-    origin_url = scrapy.Field()
-    pass
+db = PostgresqlDatabase(DATABASE_NAME,
+                        host=DATABASE_IP,
+                        port=DATABASE_PORT,
+                        user=DATABASE_USERNAME,
+                        password=DATABASE_PASSWORD)
 
 
 class EveriaItem(scrapy.Item):
@@ -49,8 +41,9 @@ class PW_Category(Model):
     created_at = DateTimeField(default=datetime.now())
 
     class Meta:
-        db_table = 'category'
+        table_name = 'category'
         database = db
+        schema = DATABASE_SCHEMA
 
 
 class PW_Album(Model):
@@ -64,8 +57,9 @@ class PW_Album(Model):
     enabled = BooleanField()
 
     class Meta:
-        db_table = 'album'
+        table_name = 'album'
         database = db
+        schema = DATABASE_SCHEMA
 
 
 class PW_Picture(Model):
@@ -75,5 +69,6 @@ class PW_Picture(Model):
     pic_index = IntegerField()
 
     class Meta:
-        db_table = 'picture'
+        table_name = 'picture'
         database = db
+        schema = DATABASE_SCHEMA
